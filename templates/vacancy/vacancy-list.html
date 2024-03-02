@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% load ru_pluralize %}
+{% block content %}
+<main class="container mt-3 pb-5">
+    <div class="row mt-5">
+        <div class="col-12 col-lg-4">
+            <aside class="pt-3 pb-4 px-4 mb-5 card">
+                <h1 class="h4 pt-2 pb-2">Моя компания</h1>
+                <div class="nav flex-column nav-pills">
+                    <a class="nav-link" href="{% url 'profile_company' %}">1. Информация о&nbsp;компании</a>
+                    <a class="nav-link active" href="{% url 'profile_vacancies' %}">2. Вакансии</a>
+                </div>
+            </aside>
+        </div>
+        <div class="col-12 col-lg-8">
+            <div class="card">
+                <div class="card-body px-4 pb-4">
+                    <section class="tab-pane fade show active">
+                        <h2 class="h4 pt-2 pb-3">Вакансии</h2>
+                        {% for item in vacancies %}
+                            <div class="card mt-3">
+                                <div class="card-body px-4">
+                                    <div class="row align-items-center">
+                                        <div class="col-6 col-lg-8">
+                                            <a href="{% url 'edit_vacancy' pk=item.pk %}"
+                                               class="mb-1">{{ item.title }}</a>
+                                            <p class="mb-1">
+                                                <span class="mr-4">{{ item.salary_max }} тыс</span>
+                                                {% if item.app_count == 0 %}
+                                                    <span class="text-muted">Нет откликов</span>
+                                                {% else %}
+                                                    <a href="{% url 'edit_vacancy' pk=item.pk %}"
+                                                       class="text-info">
+                                                        {{ item.app_count|ru_pluralize:"отклик, отклика, откликов" }}
+                                                    </a>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                        <div class="col-6 col-lg-4 text-right">
+                                            <a href="{% url 'edit_vacancy' pk=item.pk %}"
+                                               class="btn btn-outline-info">Изменить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                    <a href="{% url 'create_vacancy' %}" class="btn btn-info mt-4 mb-2">Добавить вакансию</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

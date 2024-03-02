@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+{% block content %}
+    <main class="container mt-3 pb-5">
+        <div class="row mt-5">
+            <div class="col-12 col-lg-2">
+                <div class="pl-3 mb-5">
+                    <p><a href="javascript:history.go(-1)">Назад</a></p>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-8">
+                <section class="pl-3">
+                    <h1 class="h4 pt-2 pb-3">Резюме пользователя - {{ resume.user.username }}</h1>
+                    <h2>Привет, я - {{ resume.name }} {{ resume.surname }}</h2>
+                    <p>Я - {{ resume.status }}</p>
+                    <hr>
+                    <p>Моя специальность: {{ resume.speciality }}.</p>
+                    <p>Мое образование: {{ resume.education }}</p>
+                    <p>Я квалифицирую себя {{ resume.grade }} специалистом.</p>
+                    <p>Мой опыт работы: {{ resume.experience }}.</p>
+                    <p>За свою работу мне хотелось бы получать {{ resume.salary }}.</p>
+                    <p>Мое портфолио: {{ resume.portfolio }}.</p>
+                    <hr>
+                    <p>Напишите мне: {{ resume.user.email }}.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+{% endblock %}

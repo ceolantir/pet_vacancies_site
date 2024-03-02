@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% load ru_pluralize %}
+{% block content %}
+    <main class="container mt-3">
+        <section>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <h1 class="h1 text-center mx-auto mt-4 py-5"><strong>Вакансии для <br>разработчиков</strong></h1>
+            <div class="row">
+                <div class="col-12 col-md-8 col-lg-6 offset-lg-3 offset-md-2">
+                    <form class="form-inline mb-3" enctype="multipart/form-data" method="GET" action="{% url 'search' %}">
+                        <div class="form-group col-12 col-md-10 pl-0">
+                        {{ form.data }}
+                        </div>
+                        <div class="form-group col-4 col-md-2 pl-0">
+                            <button class="btn btn-primary w-100" type="submit">Найти</button>
+                        </div>
+                    </form>
+                    <p>Например:
+                        <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Python</a>
+                        <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">JavaScript</a>
+                        <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">С#</a>
+                        <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">PHP</a>
+                        <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Kotlin</a>
+                        <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Swift</a>
+                        <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">C++</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section class="mt-5 pt-3">
+            <h2 class="h2 font-weight-normal text-center mb-5">Вакансии по рубрикам</h2>
+            <div class="row mb-0">
+                {% for speciality in specialities %}
+                    <div class="col-6 col-md-6 col-lg-3">
+                        <div class="card pt-4 text-center mb-4">
+                            <img class="mx-auto d-block" src="{{ speciality.image.url }}" width="80" height="80"
+                                 alt="">
+                            <div class="card-body">
+                                <p class="card-text mb-2">{{ speciality.title }}</p>
+                                <p class="card-text"><a
+                                        href="{{ speciality.get_absolute_url }}"> {{ speciality.vacancy_count|ru_pluralize:"вакансия, вакансии, вакансий" }}
+                                </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="my-5 pt-3">
+            <h2 class="h2 font-weight-normal text-center mb-5">Наши компании</h2>
+            <div class="row mb-0">
+                {% for company in companies %}
+                    <div class="col-6 col-md-6 col-lg-3">
+                        <div class="card pt-4 text-center mb-4">
+                            <a href="{{ company.get_absolute_url }}" style="max-width: 150px;" class="mx-auto d-block">
+                                <img width="300" height="100" class="mx-auto d-block mw-100"
+                                     src="{{ company.logo.url }}" alt="">
+                            </a>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <a href="{{ company.get_absolute_url }}">
+                                        {{ company.company_count|ru_pluralize:"вакансия, вакансии, вакансий" }}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

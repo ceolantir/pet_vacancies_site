@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <main class="container mt-3 pb-5">
+        <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">
+            <div class="card-body px-3 pb-4">
+                {% if not exist %}
+                    <h1 class="h4 pt-2 pb-3">Резюме пользователя - {{ resume.user.username }}</h1>
+                    <h2>Привет, я - {{ resume.name }} {{ resume.surname }}</h2>
+                    <p>Я - {{ resume.status }}</p>
+                    <hr>
+                    <p>Моя специальность - {{ resume.speciality }}.</p>
+                    <p>Мое образование - {{ resume.education }}</p>
+                    <p>Я квалифицирую себя {{ resume.grade }} специалистом.</p>
+                    <p>Мой опыт работы - {{ resume.experience }}.</p>
+                    <p>За свою работу мне хотелось бы получать {{ resume.salary }}.</p>
+                    <p>Мое портфолио {{ resume.portfolio }}.</p>
+                {% else %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        У пользователя нет резюме
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

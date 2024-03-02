@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <main class="container mt-3 pb-5">
+        <div class="row mt-5">
+            <div class="col-12 col-lg-4">
+                <aside class="pt-3 pb-4 px-4 mb-5 card">
+                    <h1 class="h4 pt-2 pb-2">Моя компания</h1>
+                    <div class="nav flex-column nav-pills">
+                        <a class="nav-link" href="{% url 'profile_company' %}">1. Информация о&nbsp;компании</a>
+                        <a class="nav-link active" href="{% url 'profile_vacancies' %}">2. Вакансии</a>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="card">
+                    <div class="card-body px-4 pb-4 tab-content">
+                        <section>
+                            <h2 class="h4 pt-2 pb-3">{{ title }}</h2>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <form method="POST" enctype="multipart/form-data" style="border: none;">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <button class="btn btn-info" type="submit">Сохранить</button>
+                            </form>
+                            <h2 class="h4 pt-2 pb-3">Отклики - {{ applications.count }}</h2>
+                            {% for item in applications %}
+                                <div class="card mt-3">
+                                    <div class="card-body px-4">
+                                        <a class="mb-1 font-weight-bold"
+                                           href="{% url 'user_resume' pk=item.pk %}">{{ item.username }}</a>
+                                        <p class="mb-2"><a href="tel:+79002842324"
+                                                           class="text-dark">{{ item.phone }}</a>
+                                        </p>
+                                        <p class="mb-1">{{ item.letter }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% load ru_pluralize %}
+{% block content %}
+    <main class="container mt-3">
+        <section class="mt-5 pt-3">
+            <h2 class="h2 font-weight-normal text-center mb-5">Доступные работники</h2>
+            <div class="row mb-0">
+                {% for resume in resumes %}
+                    <div class="col-4 col-md-4">
+                        <div class="card pt-4 text-center mb-4">
+                            <img class="mx-auto d-block" src="{{ resume.image.url }}" width="80" height="80" alt="">
+                            <div class="card-body">
+                                <p class="card-text mb-2"><a href="{% url 'detail_resume' pk=resume.pk %}">{{ resume.surname }} {{ resume.name }}</a></p>
+                                <p class="card-text">Специализация - {{ resume.speciality }}.</p>
+                                <p class="card-text">Квалификация - {{ resume.grade }}.</p>
+                                <p class="card-text">Опыт работы - {{ resume.experience }}.</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}
